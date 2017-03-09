@@ -248,13 +248,13 @@ void Draw()
 		g.sprite.x += 200; g.bullet_sprite.x += 200;
 	}
 	
-	if (g.animation == 0 && !g.shooting && g.sprite.x == 1000) { g.sprite.x = 0; g.shooting = false; }
+	if (g.animation == 0 && !g.shooting && g.sprite.x == 1000) { g.sprite.x = 0; }
 
 	if (g.animation == 1 && !g.shooting && g.sprite.x == 800) { g.sprite.x = 0; }
 
 	if (g.animation == 2 && !g.shooting && g.sprite.x == 1600) { g.sprite.x = 0; }
 
-	if (g.shooting && g.sprite.x == 2400) { g.sprite.x = 0; }
+	if (g.shooting && g.sprite.x == 2400) { g.sprite.x = 0; g.shooting = false; }
 	if (g.bullet_sprite.x == 800) { g.bullet_sprite.x = 0; }
 
 
