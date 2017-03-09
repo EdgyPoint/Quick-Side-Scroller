@@ -57,7 +57,7 @@ void Start()
 	IMG_Init(IMG_INIT_PNG);
 	g.background = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("assets/background.png"));
 	g.ship = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("assets/sprite sheet.png"));
-	g.shot = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("assets/shot.png"));
+	g.shot = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("assets/sprite sheet.png"));
 
 	SDL_QueryTexture(g.background, nullptr, nullptr, &g.background_width, nullptr);
 
@@ -187,9 +187,7 @@ void MoveStuff()
 		if (g.last_shot == NUM_SHOTS)
 			g.last_shot = 0;
 
-		g.shots[g.last_shot].alive = true;
-		g.shots[g.last_shot].x = g.ship_x + 32;
-		g.shots[g.last_shot].y = g.ship_y;
+		
 
 		g.shooting = true;
 		++g.last_shot;
@@ -204,6 +202,13 @@ void MoveStuff()
 		{
 			g.sprite.y = 0;
 		}		
+	}
+
+	if (g.shooting == true && g.sprite.x == 1400)
+	{
+		g.shots[g.last_shot].alive = true;
+		g.shots[g.last_shot].x = g.ship_x + 64;
+		g.shots[g.last_shot].y = g.ship_y;
 	}
 
 	for (int i = 0; i < NUM_SHOTS; ++i)
@@ -266,7 +271,7 @@ void Draw()
 	{
 		if (g.shots[i].alive)
 		{
-			target = { g.shots[i].x, g.shots[i].y, 64, 64 };
+			target = { g.shots[i].x, g.shots[i].y, 200, 200 };
 
 			SDL_RenderCopy(g.renderer, g.shot, &g.bullet_sprite, &target);
 		}
