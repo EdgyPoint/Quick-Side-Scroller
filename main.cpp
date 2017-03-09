@@ -156,13 +156,11 @@ void MoveStuff()
 		if (g.ship_x > 0)
 		{
 			g.ship_x -= SHIP_SPEED;
-			if (g.ship_x < 0) { g.ship_x = 0; }
 			g.animation = 1;
 			if (!g.shooting)
 			{
 				g.sprite.y = 200;
-			}
-			g.sprite.x = 0;
+			}	
 		}
 	}
 	if (g.right)
@@ -176,13 +174,13 @@ void MoveStuff()
 			{
 				g.sprite.y = 400;
 			}
-			g.sprite.x = 0;
+		
 		}
 	}
 
 	if (g.fire)
 	{
-		g.shooting = true;
+		
 		Mix_PlayChannel(-1, g.fx_shoot, 0);
 		g.fire = false;
 
@@ -191,20 +189,21 @@ void MoveStuff()
 
 		g.shots[g.last_shot].alive = true;
 		g.shots[g.last_shot].x = g.ship_x + 32;
-		if (!g.shooting)
-		{
-			g.shots[g.last_shot].y = g.ship_y;
-		}
+		g.shots[g.last_shot].y = g.ship_y;
+
+		g.shooting = true;
 		++g.last_shot;
 		g.sprite.y = 600;
-		g.sprite.x = 0;
+		
 	}
 
 	if (!g.right && !g.left)
 	{
 		g.animation = 0;
-		g.sprite.y = 0;
-		
+		if (!g.shooting)
+		{
+			g.sprite.y = 0;
+		}		
 	}
 
 	for (int i = 0; i < NUM_SHOTS; ++i)
@@ -249,7 +248,7 @@ void Draw()
 		g.sprite.x += 200; g.bullet_sprite.x += 200;
 	}
 	
-	if (g.animation == 0 && !g.shooting && g.sprite.x == 800) { g.sprite.x = 0; g.shooting = false; }
+	if (g.animation == 0 && !g.shooting && g.sprite.x == 1000) { g.sprite.x = 0; g.shooting = false; }
 
 	if (g.animation == 1 && !g.shooting && g.sprite.x == 800) { g.sprite.x = 0; }
 
