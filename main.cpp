@@ -30,7 +30,6 @@ struct globals
 	SDL_Texture* shot = nullptr;
 	SDL_Rect sprite;
 	SDL_Rect bullet_sprite;
-
 	int background_width = 0;
 	int ship_x = 0;
 	int ship_y = 0;
@@ -74,6 +73,7 @@ void Start()
 	g.bullet_sprite.w = g.bullet_sprite.h = 200;
 	g.bullet_sprite.y = 800;
 	g.bullet_sprite.x = 0;
+	g.sprite.w = g.sprite.h = 200;
 	g.ship_y = SCREEN_HEIGHT / 2;
 	g.fire = g.up = g.down = g.left = g.right = g.shooting = false;
 }
@@ -140,7 +140,7 @@ void MoveStuff()
 		if (g.ship_y > 0)
 		{
 			g.ship_y -= SHIP_SPEED;
-			if (g.ship_y < 0) { g.ship_y = 0; }
+			
 		}
 	}
 	if (g.down)
@@ -148,7 +148,8 @@ void MoveStuff()
 		if (g.ship_y < 480)
 		{
 			g.ship_y += SHIP_SPEED;
-			if (g.ship_y > (SCREEN_HEIGHT) - 110) { g.ship_y = (SCREEN_HEIGHT) - 110; }
+
+			
 		}
 	}
 	if (g.left)
@@ -156,6 +157,7 @@ void MoveStuff()
 		if (g.ship_x > 0)
 		{
 			g.ship_x -= SHIP_SPEED;
+			
 			g.animation = 1;
 			if (!g.shooting)
 			{
@@ -168,7 +170,7 @@ void MoveStuff()
 		if (g.ship_x < 640)
 		{
 			g.ship_x += SHIP_SPEED;
-			if (g.ship_x > SCREEN_WIDTH - 80) { g.ship_x = SCREEN_WIDTH - 80; }
+			
 			g.animation = 2;
 			if (!g.shooting)
 			{
@@ -204,7 +206,13 @@ void MoveStuff()
 		}		
 	}
 
+	if (g.ship_y < 0) { g.ship_y = 0; }
+	if (g.ship_x < 0) { g.ship_x = 0; }
+	if (g.ship_y > (SCREEN_HEIGHT)-110) { g.ship_y = (SCREEN_HEIGHT)-110; }
+	if (g.ship_x > SCREEN_WIDTH - 80) { g.ship_x = SCREEN_WIDTH - 80; }
+
 	if (g.shooting == true && g.sprite.x == 1400)
+
 	{
 		g.shots[g.last_shot].alive = true;
 		g.shots[g.last_shot].x = g.ship_x + 64;
@@ -228,7 +236,7 @@ void Draw()
 {
 	SDL_Rect target;
 
-	g.sprite.w = g.sprite.h = 200;
+
 		
 	// Scroll and draw background
 	if (g.animation == 0)  { g.scroll += SCROLL_SPEED; }
@@ -262,7 +270,8 @@ void Draw()
 	if (g.shooting && g.sprite.x == 2400) { g.sprite.x = 0; g.shooting = false; }
 	if (g.bullet_sprite.x == 800) { g.bullet_sprite.x = 0; }
 
-
+	g.frame++;
+	if (g.frame == 120) { g.frame = 1; }
 
 	SDL_RenderCopy(g.renderer, g.ship, &g.sprite, &target);
 
@@ -290,8 +299,6 @@ int main(int argc, char* args[])
 	{
 		MoveStuff();
 		Draw();
-		g.frame++;
-		if (g.frame == 120) { g.frame = 1; }
 	}
 
 	Finish();
