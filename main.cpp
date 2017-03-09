@@ -74,7 +74,7 @@ void Start()
 	g.bullet_sprite.w = g.bullet_sprite.h = 200;
 	g.bullet_sprite.y = 800;
 	g.bullet_sprite.x = 0;
-	g.ship_y = 3 * SCREEN_HEIGHT / 4;
+	g.ship_y = SCREEN_HEIGHT / 2;
 	g.fire = g.up = g.down = g.left = g.right = g.shooting = false;
 }
 
@@ -140,7 +140,7 @@ void MoveStuff()
 		if (g.ship_y > 0)
 		{
 			g.ship_y -= SHIP_SPEED;
-			if (g.ship_y < SCREEN_HEIGHT / 2) { g.ship_y = SCREEN_HEIGHT / 2; }
+			if (g.ship_y < 0) { g.ship_y = 0; }
 		}
 	}
 	if (g.down)
@@ -148,7 +148,7 @@ void MoveStuff()
 		if (g.ship_y < 480)
 		{
 			g.ship_y += SHIP_SPEED;
-			if (g.ship_y > SCREEN_HEIGHT - 64) { g.ship_y = SCREEN_HEIGHT - 64; }
+			if (g.ship_y > (SCREEN_HEIGHT) - 110) { g.ship_y = (SCREEN_HEIGHT) - 110; }
 		}
 	}
 	if (g.left)
@@ -168,7 +168,7 @@ void MoveStuff()
 		if (g.ship_x < 640)
 		{
 			g.ship_x += SHIP_SPEED;
-			if (g.ship_x > SCREEN_WIDTH - 64) { g.ship_x = SCREEN_WIDTH - 64; }
+			if (g.ship_x > SCREEN_WIDTH - 80) { g.ship_x = SCREEN_WIDTH - 80; }
 			g.animation = 2;
 			if (!g.shooting)
 			{
@@ -247,7 +247,7 @@ void Draw()
 	// Draw player's ship --
 	target = { g.ship_x, g.ship_y, 200, 200 };
 
-	g.frame++;
+	
 	if (g.frame % 6 == 0)
 	{
 		g.sprite.x += 200; g.bullet_sprite.x += 200;
@@ -255,7 +255,7 @@ void Draw()
 	
 	if (g.animation == 0 && !g.shooting && g.sprite.x == 1000) { g.sprite.x = 0; }
 
-	if (g.animation == 1 && !g.shooting && g.sprite.x == 800) { g.sprite.x = 0; }
+	if (g.animation == 1 && !g.shooting && g.sprite.x == 1000) { g.sprite.x = 0; }
 
 	if (g.animation == 2 && !g.shooting && g.sprite.x == 1600) { g.sprite.x = 0; }
 
@@ -290,6 +290,7 @@ int main(int argc, char* args[])
 	{
 		MoveStuff();
 		Draw();
+		g.frame++;
 		if (g.frame == 120) { g.frame = 1; }
 	}
 
